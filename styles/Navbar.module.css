@@ -1,0 +1,55 @@
+/* styles/Navbar.module.css */
+.navbar {
+  position: sticky;
+  top: 0;
+  background: var(--navbar-bg);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-color);
+  z-index: 100;
+}
+
+.navContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.75rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: var(--navbar-text);
+}
+
+.navLinks {
+  display: flex;
+  gap: 2rem;
+}
+
+.navLinks a {
+  color: var(--navbar-text);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.navLinks a:hover {
+  color: var(--link-hover);
+}
+
+.themeToggle {
+  display: block;
+}
+
+/* Hide desktop nav links and show mobile menu on small screens */
+@media (max-width: 768px) {
+  .navLinks,
+  .themeToggle {
+    display: none;
+  }
+}

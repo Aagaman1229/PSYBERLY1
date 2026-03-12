@@ -1,0 +1,49 @@
+/* styles/MobileMenu.module.css */
+.mobileMenu {
+  position: relative;
+  display: none; /* hidden by default, shown in mobile media query */
+}
+
+.hamburger {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--navbar-text);
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: var(--navbar-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0;
+  z-index: 1000;
+}
+
+.dropdown a {
+  padding: 0.75rem 1.5rem;
+  color: var(--navbar-text);
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.dropdown a:hover {
+  background-color: rgba(128, 128, 128, 0.1);
+}
+
+@media (max-width: 768px) {
+  .mobileMenu {
+    display: block;
+  }
+}

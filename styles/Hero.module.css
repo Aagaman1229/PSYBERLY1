@@ -1,0 +1,33 @@
+.hero {
+  width: 100%;
+  background-color: var(--bg-color); /* matches theme background */
+}
+
+.heroImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain; /* ensures full image is visible */
+}
+
+.descriptionContainer {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+  text-align: center;
+}
+
+.description {
+  font-size: 1.3rem;
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+@media (max-width: 768px) {
+  .descriptionContainer {
+    margin: 1.5rem auto;
+  }
+  .description {
+    font-size: 1.1rem;
+  }
+}
