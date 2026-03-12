@@ -83,3 +83,36 @@
   font-size: 0.8rem;
   color: var(--text-color);
 }
+.stats {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.likeButton, .commentLink {
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+  text-decoration: none;
+}
+
+.likeButton:hover {
+  color: #e74c3c;
+}
+
+.commentLink:hover {
+  color: var(--link-hover);
+}
+.likeButton.liked {
+  color: #e74c3c; /* or any color to indicate liked */
+  cursor: default;
+}
+.likeButton.liked:hover {
+  color: #e74c3c;
+}
