@@ -16,7 +16,7 @@ export default function Navbar() {
         {/* Logo with theme support */}
         <Link href="/" className={styles.logo}>
           <Image src={logoSrc} alt="Logo" width={40} height={40} />
-          <span>MySite</span>
+          <span>Psyberly</span>
         </Link>
 
         {/* Desktop Navigation Links */}

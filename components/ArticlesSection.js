@@ -1,29 +1,31 @@
 'use client';
 
-import { useState } from 'react';
+import Link from 'next/link';
+import { useState, useMemo } from 'react';
 import ArticleCard from './ArticleCard';
 import styles from '../styles/ArticlesSection.module.css';
 
 export default function ArticlesSection({ posts }) {
   const [activeTab, setActiveTab] = useState('latest');
 
-  // Define filter/sort logic for each tab
-  const getFilteredPosts = () => {
+  // Memoized sorting based on active tab
+  const sortedPosts = useMemo(() => {
     switch (activeTab) {
       case 'latest':
-        return posts; // already sorted by created_at desc
+        return [...posts].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
       case 'trending':
-        // Replace with your own logic – e.g., most commented
-        return [...posts].reverse();
+        // Most comments (or could be views – adjust as needed)
+        return [...posts].sort((a, b) => (b.comments_count || 0) - (a.comments_count || 0));
       case 'hot':
-        // Replace with your own logic – e.g., most liked
-        return [...posts].sort((a, b) => (a.likes || 0) - (b.likes || 0)).reverse();
+        // Most likes
+        return [...posts].sort((a, b) => (b.likes || 0) - (a.likes || 0));
       default:
         return posts;
     }
-  };
+  }, [posts, activeTab]);
 
-  const filteredPosts = getFilteredPosts();
+  // Take only first 4
+  const displayedPosts = sortedPosts.slice(0, 4);
 
   return (
     <section className={styles.section}>
@@ -39,11 +41,25 @@ export default function ArticlesSection({ posts }) {
           </button>
         ))}
       </div>
-      <div className={styles.grid}>
-        {filteredPosts.map((post) => (
-          <ArticleCard key={post.id} post={post} />
+
+      <div className={styles.gridContainer}>
+        {displayedPosts.map((post, index) => (
+          <div
+            key={post.id}
+            className={index === 0 ? styles.featuredCard : styles.regularCard}
+          >
+            <ArticleCard post={post} featured={index === 0} />
+          </div>
         ))}
       </div>
+
+      {posts.length > 4 && (
+        <div className={styles.viewMoreContainer}>
+          <Link href={`/articles?tab=${activeTab}`} className={styles.viewMoreButton}>
+            View More {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} Articles
+          </Link>
+        </div>
+      )}
     </section>
   );
 }

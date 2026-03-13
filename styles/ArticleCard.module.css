@@ -1,4 +1,5 @@
 .card {
+  position: relative;
   background: var(--bg-color);
   border: 1px solid var(--border-color);
   border-radius: 12px;
@@ -6,6 +7,11 @@
   transition: transform 0.2s, box-shadow 0.2s;
   display: flex;
   flex-direction: column;
+  height: 100%;
+}
+
+.featured {
+  border: 2px solid var(--link-hover);
 }
 
 .card:hover {
@@ -13,17 +19,75 @@
   box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
 
+/* Overlay link – covers entire card, but sits below interactive elements */
+.cardLink {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  text-indent: -9999px;
+  overflow: hidden;
+}
+
+/* Content container – does not create a stacking context (no position) */
+.content {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Interactive elements – must be above the overlay link */
+.likeButton,
+.commentLink {
+  position: relative;
+  z-index: 2;
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+  text-decoration: none;
+}
+
+.likeButton:hover {
+  color: #e74c3c;
+}
+
+.likeButton.liked {
+  color: #e74c3c;
+  cursor: default;
+}
+
+.commentLink:hover {
+  color: var(--link-hover);
+}
+
+/* Images – static, will be covered by the overlay link */
 .image {
   width: 100%;
   height: 200px;
   object-fit: cover;
 }
 
-.content {
-  padding: 1.5rem;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+.featuredImage {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+/* Non‑interactive text elements – they sit below the link, so clicks go to the link */
+.title,
+.description,
+.meta,
+.date,
+.stats,
+.tags,
+.tag {
+  color: var(--text-color);
 }
 
 .title {
@@ -32,17 +96,7 @@
   line-height: 1.4;
 }
 
-.title a {
-  color: var(--text-color);
-  text-decoration: none;
-}
-
-.title a:hover {
-  color: var(--link-hover);
-}
-
 .description {
-  color: var(--text-color);
   opacity: 0.8;
   margin-bottom: 1rem;
   line-height: 1.5;
@@ -55,19 +109,13 @@
   align-items: center;
   margin-bottom: 1rem;
   font-size: 0.9rem;
-  color: var(--text-color);
   opacity: 0.7;
 }
 
 .stats {
   display: flex;
   gap: 1rem;
-}
-
-.stats span {
-  display: flex;
   align-items: center;
-  gap: 0.3rem;
 }
 
 .tags {
@@ -81,38 +129,82 @@
   padding: 0.3rem 0.8rem;
   border-radius: 20px;
   font-size: 0.8rem;
-  color: var(--text-color);
-}
-.stats {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
 }
 
-.likeButton, .commentLink {
-  background: transparent;
+/* Author section */
+.authorContainer {
+  position: relative;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.authorButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
   border: none;
-  color: var(--text-color);
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
+  padding: 0;
+  color: var(--text-color);
   font-size: 0.9rem;
-  transition: color 0.2s;
-  text-decoration: none;
 }
 
-.likeButton:hover {
-  color: #e74c3c;
+.authorButton:hover {
+  opacity: 0.8;
 }
 
-.commentLink:hover {
+.authorAvatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.authorName {
+  font-weight: 500;
+}
+
+/* Popup */
+.authorPopup {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  min-width: 200px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  z-index: 10;
+}
+
+.authorPopup h4 {
+  margin-bottom: 0.25rem;
+  font-size: 1rem;
+  color: var(--text-color);
+}
+
+.authorBio {
+  font-size: 0.85rem;
+  color: var(--text-color);
+  opacity: 0.8;
+  margin-bottom: 0.5rem;
+}
+
+.authorLinks {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.authorLink {
   color: var(--link-hover);
+  font-size: 1rem;
+  transition: color 0.2s;
 }
-.likeButton.liked {
-  color: #e74c3c; /* or any color to indicate liked */
-  cursor: default;
-}
-.likeButton.liked:hover {
-  color: #e74c3c;
+
+.authorLink:hover {
+  color: var(--text-color);
 }

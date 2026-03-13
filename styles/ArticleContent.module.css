@@ -7,14 +7,117 @@
   margin-bottom: 0.5rem;
   color: var(--text-color);
 }
+/* Compact author section */
+.authorCompact {
+  position: relative;
+  display: inline-block;
+  margin: 1rem 0;
+}
+
+.authorButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+.authorButton:hover {
+  opacity: 0.8;
+}
+
+.authorAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.authorName {
+  font-weight: 500;
+}
+
+/* Popup (same as card popup) */
+.authorPopup {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  min-width: 220px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  z-index: 10;
+}
+
+.authorPopup h4 {
+  margin-bottom: 0.25rem;
+  font-size: 1rem;
+  color: var(--text-color);
+}
+
+.authorBio {
+  font-size: 0.85rem;
+  color: var(--text-color);
+  opacity: 0.8;
+  margin-bottom: 0.5rem;
+}
+
+.authorLinks {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.authorLink {
+  color: var(--link-hover);
+  font-size: 1rem;
+  transition: color 0.2s;
+}
+
+.authorLink:hover {
+  color: var(--text-color);
+}
 
 .meta {
   display: flex;
+  align-items: center;
   gap: 1.5rem;
   color: var(--text-color);
   opacity: 0.7;
-  margin-bottom: 2rem;
+  margin: 1rem 0 2rem;
   font-size: 0.95rem;
+  flex-wrap: wrap;
+}
+
+.likeButton {
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.95rem;
+  transition: color 0.2s;
+  padding: 0.2rem 0.5rem;
+  border-radius: 20px;
+}
+
+.likeButton:hover {
+  color: #e74c3c;
+  background-color: rgba(231, 76, 60, 0.1);
+}
+
+.likeButton.liked {
+  color: #e74c3c;
+  cursor: default;
+  background-color: rgba(231, 76, 60, 0.1);
 }
 
 .coverImage {
@@ -49,5 +152,8 @@
 @media (max-width: 768px) {
   .title {
     font-size: 2rem;
+  }
+  .meta {
+    gap: 1rem;
   }
 }

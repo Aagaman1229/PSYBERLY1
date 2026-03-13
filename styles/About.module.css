@@ -1,0 +1,300 @@
+/* styles/About.module.css */
+.aboutPage {
+  min-height: 100vh;
+  background: var(--bg-color); /* uses theme background */
+  color: var(--text-color);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Optional subtle pattern overlay */
+.aboutPage::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(circle at 20% 30%, var(--border-color) 0.5px, transparent 0.5px);
+  background-size: 30px 30px;
+  opacity: 0.2;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Hero section with fade-in */
+.hero {
+  text-align: center;
+  margin-bottom: 4rem;
+  animation: fadeInUp 1s ease-out;
+}
+
+.heroTitle {
+  font-size: 4rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+  color: var(--text-color);
+  position: relative;
+  display: inline-block;
+}
+
+/* Animated underline for hero title */
+.heroTitle::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: var(--link-hover);
+  border-radius: 2px;
+  animation: expandWidth 2s ease-out forwards;
+}
+
+.heroSubtitle {
+  font-size: 1.5rem;
+  opacity: 0.9;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+  animation: fadeInUp 1s ease-out 0.2s both;
+}
+
+/* Story section */
+.story {
+  background: var(--border-color);
+  border-radius: 30px;
+  padding: 3rem;
+  margin-bottom: 5rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  animation: fadeInUp 1s ease-out 0.3s both;
+}
+
+.storyTitle {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  color: var(--text-color);
+  position: relative;
+  display: inline-block;
+}
+
+.storyTitle::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: var(--link-hover);
+  border-radius: 2px;
+}
+
+.storyText {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  opacity: 0.95;
+  margin-bottom: 1.5rem;
+  color: var(--text-color);
+}
+
+/* Team section */
+.teamSection {
+  text-align: center;
+  margin-bottom: 5rem;
+  animation: fadeInUp 1s ease-out 0.4s both;
+}
+
+.teamTitle {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 3rem;
+  color: var(--text-color);
+}
+
+.teamGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2.5rem;
+  justify-items: center;
+}
+
+.teamCard {
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 350px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+  animation: float 6s infinite ease-in-out;
+}
+
+.teamCard:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(var(--link-hover-rgb), 0.2);
+  border-color: var(--link-hover);
+}
+
+.teamCard:nth-child(2) {
+  animation-delay: -2s; /* different phase for second card */
+}
+
+.teamImageWrapper {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid var(--link-hover);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.teamImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.teamName {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: var(--text-color);
+}
+
+.teamRole {
+  font-size: 1.1rem;
+  opacity: 0.8;
+  margin-bottom: 1rem;
+  font-style: italic;
+  color: var(--text-color);
+}
+
+.teamBio {
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.85;
+  margin-bottom: 1.5rem;
+  color: var(--text-color);
+}
+
+.teamLinks {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.teamLink {
+  color: var(--link-hover);
+  font-size: 1.5rem;
+  transition: transform 0.2s, color 0.2s;
+  opacity: 0.8;
+}
+
+.teamLink:hover {
+  transform: scale(1.2) rotate(8deg);
+  color: var(--text-color);
+}
+
+/* Join section */
+.joinSection {
+  background: var(--border-color);
+  border-radius: 40px;
+  padding: 3rem;
+  text-align: center;
+  border: 1px solid var(--border-color);
+  animation: fadeInUp 1s ease-out 0.5s both;
+}
+
+.joinTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--text-color);
+}
+
+.joinText {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0.9;
+  color: var(--text-color);
+}
+
+.joinButton {
+  display: inline-flex;
+  align-items: center;
+  background: var(--link-hover);
+  color: white;
+  padding: 1rem 2.5rem;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  gap: 0.5rem;
+}
+
+.joinButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(var(--link-hover-rgb), 0.4);
+  background: var(--text-color);
+}
+
+/* Keyframe animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes expandWidth {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 80px;
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .heroTitle { font-size: 3rem; }
+  .heroSubtitle { font-size: 1.2rem; }
+  .story { padding: 2rem; }
+  .storyTitle { font-size: 2rem; }
+  .teamTitle { font-size: 2.5rem; }
+  .joinTitle { font-size: 2rem; }
+}

@@ -7,7 +7,7 @@ import styles from '../styles/Home.module.css';
 export default async function Home() {
   const { data: posts, error } = await supabase
     .from('posts')
-    .select('*')
+    .select('*, author:author_id(*)')  // include author object
     .order('created_at', { ascending: false });
 
   if (error) {

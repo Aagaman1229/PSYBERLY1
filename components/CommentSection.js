@@ -12,6 +12,7 @@ export default function CommentSection({ postId, initialComments }) {
   const [newComment, setNewComment] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [likedComments, setLikedComments] = useState({});
+  const [likingIds, setLikingIds] = useState({}); // track which comments are being processed
 
   // Load liked status from localStorage on mount
   useEffect(() => {
@@ -39,33 +40,41 @@ export default function CommentSection({ postId, initialComments }) {
     setSortBy(prev => prev === 'latest' ? 'top' : 'latest');
   };
 
-  const handleLike = async (commentId) => {
-    // Check if already liked
-    if (likedComments[commentId]) return;
+  const handleLikeToggle = async (commentId) => {
+    if (likingIds[commentId]) return; // prevent double-click
+
+    const currentlyLiked = likedComments[commentId] || false;
+    const newLikedState = !currentlyLiked;
+    const newLikes = newLikedState 
+      ? comments.find(c => c.id === commentId).likes + 1 
+      : comments.find(c => c.id === commentId).likes - 1;
 
     // Optimistic update
+    setLikingIds(prev => ({ ...prev, [commentId]: true }));
+    setLikedComments(prev => ({ ...prev, [commentId]: newLikedState }));
     setComments(prev =>
-      prev.map(c => c.id === commentId ? { ...c, likes: c.likes + 1 } : c)
+      prev.map(c => c.id === commentId ? { ...c, likes: newLikes } : c)
     );
-    setLikedComments(prev => ({ ...prev, [commentId]: true }));
-    localStorage.setItem(`liked_comment_${commentId}`, 'true');
+    localStorage.setItem(`liked_comment_${commentId}`, newLikedState ? 'true' : 'false');
 
-    const { error } = await supabase.rpc('increment_comment_likes', {
-      comment_id: commentId,
-    });
+    // Call the appropriate RPC
+    const rpcFunction = newLikedState ? 'increment_comment_likes' : 'decrement_comment_likes';
+    const { error } = await supabase.rpc(rpcFunction, { comment_id: commentId });
+
     if (error) {
-      console.error('Error liking comment:', error);
-      // Revert
+      console.error(`Error ${newLikedState ? 'liking' : 'unliking'} comment:`, error);
+      // Revert optimistic update
+      setLikedComments(prev => ({ ...prev, [commentId]: currentlyLiked }));
       setComments(prev =>
-        prev.map(c => c.id === commentId ? { ...c, likes: c.likes - 1 } : c)
+        prev.map(c => c.id === commentId ? { ...c, likes: currentlyLiked ? c.likes + 1 : c.likes - 1 } : c)
       );
-      setLikedComments(prev => {
-        const newLiked = { ...prev };
-        delete newLiked[commentId];
-        return newLiked;
-      });
-      localStorage.removeItem(`liked_comment_${commentId}`);
+      localStorage.setItem(`liked_comment_${commentId}`, currentlyLiked ? 'true' : 'false');
     }
+    setLikingIds(prev => {
+      const newState = { ...prev };
+      delete newState[commentId];
+      return newState;
+    });
   };
 
   const handleSubmitComment = async (e) => {
@@ -129,9 +138,9 @@ export default function CommentSection({ postId, initialComments }) {
           <div key={comment.id} className={styles.comment}>
             <p className={styles.commentContent}>{comment.content}</p>
             <button
-              onClick={() => handleLike(comment.id)}
+              onClick={() => handleLikeToggle(comment.id)}
               className={`${styles.likeButton} ${likedComments[comment.id] ? styles.liked : ''}`}
-              disabled={likedComments[comment.id]}
+              disabled={likingIds[comment.id]} // disable only while processing
             >
               <FaHeart /> {comment.likes}
             </button>
