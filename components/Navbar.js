@@ -2,36 +2,46 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import ThemeToggle, { useTheme } from './ThemeToggle'; // import useTheme
+import { usePathname } from 'next/navigation'; // import hook
+import ThemeToggle, { useTheme } from './ThemeToggle';
 import MobileMenu from './MobileMenu';
 import styles from '../styles/Navbar.module.css';
 
 export default function Navbar() {
-  const { darkMode } = useTheme(); // get current theme
+  const { darkMode } = useTheme();
+  const pathname = usePathname(); // get current path
   const logoSrc = darkMode ? '/logo-dark.png' : '/logo-light.png';
+
+  // Helper to check if a link is active
+  const isActive = (href) => {
+    if (href === '/') return pathname === '/'; // exact match for home
+    return pathname.startsWith(href); // for /about and /articles (and any subpages)
+  };
 
   return (
     <nav className={styles.navbar}>
       <div className={styles.navContainer}>
-        {/* Logo with theme support */}
         <Link href="/" className={styles.logo}>
           <Image src={logoSrc} alt="Logo" width={40} height={40} />
           <span>Psyberly</span>
         </Link>
 
-        {/* Desktop Navigation Links */}
         <div className={styles.navLinks}>
-          <Link href="/">Home</Link>
-          <Link href="/about">About</Link>
-          <Link href="/articles">Articles</Link>
+          <Link href="/" className={isActive('/') ? styles.active : ''}>
+            Home
+          </Link>
+          <Link href="/about" className={isActive('/about') ? styles.active : ''}>
+            About
+          </Link>
+          <Link href="/articles" className={isActive('/articles') ? styles.active : ''}>
+            Articles
+          </Link>
         </div>
 
-        {/* Theme Toggle (visible on desktop) */}
         <div className={styles.themeToggle}>
           <ThemeToggle />
         </div>
 
-        {/* Mobile Menu */}
         <MobileMenu />
       </div>
     </nav>

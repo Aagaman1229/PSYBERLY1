@@ -31,20 +31,54 @@
   gap: 2rem;
 }
 
+.themeToggle {
+  display: block;
+}
+
+
 .navLinks a {
+  position: relative;
+  z-index: 1;
+  padding: 0.5rem 1rem;
+  margin: -0.5rem -1rem;
   color: var(--navbar-text);
   text-decoration: none;
   font-weight: 500;
   transition: color 0.2s;
+  overflow: hidden;
 }
 
-.navLinks a:hover {
-  color: var(--link-hover);
+/* Background effect for hover and active */
+.navLinks a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--link-hover);
+  border-radius: 20px;
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.2s ease;
 }
 
-.themeToggle {
-  display: block;
+.navLinks a:hover::before {
+  opacity: 0.1; /* subtle hover */
 }
+
+.navLinks a.active::before {
+  opacity: 0.25; /* more visible for active page */
+}
+
+.navLinks a.active {
+  color: var(--link-hover); /* text color matches theme link */
+}
+
+
+
+/* Ensure mobile menu also shows active state (if you want) */
+/* You can extend MobileMenu similarly, but it's optional */
 
 /* Hide desktop nav links and show mobile menu on small screens */
 @media (max-width: 768px) {
